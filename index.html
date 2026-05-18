@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
@@ -411,13 +412,13 @@
 
   <!-- API Setup -->
   <div class="api-setup" id="apiSetup">
-    <h3>🔑 Enter your Gemini API Key</h3>
+    <h3>🔑 Enter your OpenRouter API Key</h3>
     <div class="api-input-row">
-      <input type="password" id="apiKeyInput" placeholder="AIzaSy..." />
+      <input type="password" id="apiKeyInput" placeholder="sk-or-v1-..." />
       <button class="save-btn" onclick="saveApiKey()">Save Key</button>
     </div>
     <p class="api-hint">
-      Free key from <a href="https://aistudio.google.com" target="_blank">aistudio.google.com</a> → "Get API Key" — 1 million tokens/day free!
+      Free key from <a href="https://openrouter.ai/keys" target="_blank">openrouter.ai/keys</a> → "Create Key" — Free models available!
     </p>
   </div>
 
@@ -546,7 +547,7 @@
   async function askDoubt() {
     const question = document.getElementById('questionInput').value.trim();
     if (!question) { showError('Please type your question first!'); return; }
-    if (!apiKey) { showError('Please save your Gemini API key first!'); document.getElementById('apiSetup').style.display = 'block'; return; }
+    if (!apiKey) { showError('Please save your OpenRouter API key first!'); document.getElementById('apiSetup').style.display = 'block'; return; }
 
     hideError();
     setLoading(true);
@@ -562,10 +563,18 @@ Student's Question: ${question}
 ${modeInstruction}`;
 
     try {
-      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
+      const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiKey}`,
+          'HTTP-Referer': 'https://doubt-solver.github.io',
+          'X-Title': 'JEE Doubt Solver'
+        },
+        body: JSON.stringify({
+          model: 'meta-llama/llama-3.3-8b-instruct:free',
+          messages: [{ role: 'user', content: prompt }]
+        })
       });
 
       const data = await res.json();
@@ -576,7 +585,7 @@ ${modeInstruction}`;
         return;
       }
 
-      currentAnswer = data.candidates[0].content.parts[0].text;
+      currentAnswer = data.choices[0].message.content;
       showAnswer(currentAnswer);
 
       // Save to history
