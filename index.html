@@ -553,12 +553,12 @@
     setLoading(true);
 
     const modeInstruction = answerMode === 'short'
-      ? 'Give a SHORT and CONCISE answer in maximum 5-6 lines. Save tokens. Only key formula or key concept. No extra explanation.'
-      : 'Give a DETAILED step-by-step answer. Explain fully with concept, formula, solution steps and JEE tips.';
+      ? 'Give a SHORT and CONCISE answer in maximum 5-6 lines. Only key points. No extra explanation.'
+      : 'Give a DETAILED step-by-step answer. Explain fully with examples and tips.';
 
-    const prompt = `You are an expert JEE (Joint Entrance Examination) teacher in India.
+    const prompt = `You are a helpful and friendly teacher. Answer the student's question clearly.
 Topic: ${selectedSubject}
-Student's Question: ${question}
+Question: ${question}
 
 ${modeInstruction}`;
 
