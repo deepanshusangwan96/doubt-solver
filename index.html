@@ -4,347 +4,356 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>DoubtClear – AI Doubt Solver for Aspirants</title>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<title>DoubtClear – JEE AI Buddy</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
   :root {
-    --bg: #f5f4f0;
+    --bg: #f0f2f8;
     --surface: #ffffff;
-    --surface2: #f0efe9;
-    --border: #e2e0d8;
-    --text: #1a1a18;
-    --text2: #6b6960;
-    --text3: #9e9c95;
-    --accent: #2563eb;
-    --accent-light: #eff4ff;
-    --accent-border: #bfcffd;
-    --green: #16a34a;
+    --surface2: #f7f8fc;
+    --border: #e4e6f0;
+    --text: #18181b;
+    --text2: #6b7280;
+    --text3: #a0a8b8;
+    --accent: #6c63ff;
+    --accent2: #ff6584;
+    --accent-light: #f0effe;
+    --accent-border: #d4d0fd;
+    --green: #22c55e;
     --green-light: #f0fdf4;
-    --red: #dc2626;
-    --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.04);
-    --shadow-lg: 0 8px 32px rgba(0,0,0,0.10);
-    --radius: 12px;
-    --radius-sm: 8px;
+    --red: #ef4444;
+    --shadow: 0 2px 12px rgba(108,99,255,0.08);
+    --shadow-lg: 0 8px 40px rgba(108,99,255,0.13);
+    --radius: 18px;
+    --radius-sm: 12px;
+    --radius-xs: 8px;
+    --chat-max: 700px;
   }
   [data-theme="dark"] {
-    --bg: #0f0f0e;
-    --surface: #1a1a18;
-    --surface2: #232320;
-    --border: #2e2e2a;
-    --text: #f0efe9;
-    --text2: #a09e97;
-    --text3: #5e5c56;
-    --accent: #4d7fff;
-    --accent-light: #1a2340;
-    --accent-border: #2a3a6e;
-    --green: #22c55e;
-    --green-light: #0f2a1a;
+    --bg: #13131a;
+    --surface: #1e1e2a;
+    --surface2: #25253a;
+    --border: #2e2e45;
+    --text: #f0f0ff;
+    --text2: #9090b0;
+    --text3: #55556a;
+    --accent: #8b83ff;
+    --accent2: #ff7a9a;
+    --accent-light: #1e1a3a;
+    --accent-border: #3a3570;
+    --green: #4ade80;
+    --green-light: #0d2a1a;
     --red: #f87171;
-    --shadow: 0 1px 3px rgba(0,0,0,0.3), 0 4px 16px rgba(0,0,0,0.2);
-    --shadow-lg: 0 8px 32px rgba(0,0,0,0.4);
+    --shadow: 0 2px 12px rgba(0,0,0,0.3);
+    --shadow-lg: 0 8px 40px rgba(0,0,0,0.4);
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
-    font-family: 'Sora', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     background: var(--bg);
     color: var(--text);
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
     transition: background 0.3s, color 0.3s;
   }
 
-  /* NAV */
+  /* ── NAV ── */
   nav {
     position: sticky; top: 0; z-index: 100;
     background: var(--surface);
     border-bottom: 1px solid var(--border);
-    padding: 0 24px;
-    height: 60px;
+    padding: 0 20px;
+    height: 58px;
     display: flex; align-items: center; justify-content: space-between;
-    backdrop-filter: blur(8px);
+    box-shadow: 0 1px 0 var(--border);
   }
   .nav-logo {
     display: flex; align-items: center; gap: 10px;
-    font-size: 18px; font-weight: 700; color: var(--text);
-    text-decoration: none;
+    font-size: 17px; font-weight: 800; color: var(--text);
+    text-decoration: none; letter-spacing: -0.3px;
   }
-  .nav-logo-icon {
-    width: 32px; height: 32px; border-radius: 8px;
-    background: transparent;
+  .logo-icon {
+    width: 34px; height: 34px; border-radius: 10px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
     display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(108,99,255,0.35);
   }
-  .nav-right { display: flex; align-items: center; gap: 10px; }
+  .nav-right { display: flex; align-items: center; gap: 8px; }
 
-  .theme-toggle {
+  .theme-btn {
     background: var(--surface2);
     border: 1px solid var(--border);
     border-radius: 20px;
-    padding: 6px 12px;
+    padding: 5px 12px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 13px;
+    font-weight: 600;
     color: var(--text2);
-    font-family: 'Sora', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     transition: all 0.2s;
-    display: flex; align-items: center; gap: 6px;
   }
-  .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+  .theme-btn:hover { border-color: var(--accent); color: var(--accent); }
 
   .api-badge {
-    font-size: 11px;
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
+    font-size: 11px; padding: 5px 11px;
+    border-radius: 20px; font-weight: 700;
+    cursor: pointer; transition: all 0.2s;
+    letter-spacing: 0.01em;
   }
-  .api-badge.connected { background: var(--green-light); color: var(--green); border: 1px solid var(--green); }
-  .api-badge.disconnected { background: var(--accent-light); color: var(--accent); border: 1px solid var(--accent-border); }
+  .api-badge.connected { background: var(--green-light); color: var(--green); border: 1.5px solid var(--green); }
+  .api-badge.disconnected { background: var(--accent-light); color: var(--accent); border: 1.5px solid var(--accent-border); }
 
-  /* MAIN */
-  main {
-    max-width: 780px;
+  /* ── LAYOUT ── */
+  .app {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    max-width: var(--chat-max);
+    width: 100%;
     margin: 0 auto;
-    padding: 40px 20px 80px;
+    padding: 0 16px;
   }
 
-  /* HERO */
-  .hero {
-    text-align: center;
-    margin-bottom: 40px;
-    animation: fadeUp 0.5s ease;
-  }
-  .hero h1 {
-    font-size: clamp(28px, 5vw, 42px);
-    font-weight: 700;
-    line-height: 1.2;
-    margin-bottom: 12px;
-    color: var(--text);
-  }
-  .hero h1 span { color: var(--accent); }
-  .hero p {
-    font-size: 15px;
-    color: var(--text2);
-    max-width: 480px;
-    margin: 0 auto;
-    line-height: 1.7;
-  }
-
-  /* API SETUP CARD */
+  /* ── API SETUP ── */
   .api-setup {
     background: var(--surface);
-    border: 1px solid var(--accent-border);
-    border-radius: var(--radius);
-    padding: 20px 24px;
-    margin-bottom: 28px;
-    animation: fadeUp 0.5s ease 0.1s both;
+    border: 1.5px solid var(--accent-border);
+    border-radius: var(--radius-sm);
+    padding: 18px 20px;
+    margin: 20px 0 0;
+    animation: fadeUp 0.4s ease both;
   }
   .api-setup h3 {
-    font-size: 14px; font-weight: 600;
-    color: var(--accent);
-    margin-bottom: 12px;
-    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; font-weight: 700;
+    color: var(--accent); margin-bottom: 10px;
   }
-  .api-input-row {
-    display: flex; gap: 10px;
-  }
-  .api-input-row input {
-    flex: 1;
-    padding: 10px 14px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    background: var(--bg);
-    color: var(--text);
+  .api-row { display: flex; gap: 8px; }
+  .api-row input {
+    flex: 1; padding: 9px 13px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-xs);
+    background: var(--bg); color: var(--text);
     font-family: 'JetBrains Mono', monospace;
-    font-size: 13px;
-    outline: none;
-    transition: border 0.2s;
+    font-size: 12px; outline: none; transition: border 0.2s;
   }
-  .api-input-row input:focus { border-color: var(--accent); }
-  .api-input-row input::placeholder { color: var(--text3); }
+  .api-row input:focus { border-color: var(--accent); }
+  .api-row input::placeholder { color: var(--text3); }
   .save-btn {
-    padding: 10px 20px;
-    background: var(--accent);
-    color: #fff;
-    border: none;
-    border-radius: var(--radius-sm);
-    font-family: 'Sora', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: opacity 0.2s;
-    white-space: nowrap;
+    padding: 9px 18px; background: var(--accent); color: #fff;
+    border: none; border-radius: var(--radius-xs);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px; font-weight: 700; cursor: pointer;
+    transition: opacity 0.2s; white-space: nowrap;
   }
   .save-btn:hover { opacity: 0.85; }
-  .api-hint {
-    font-size: 12px;
-    color: var(--text3);
-    margin-top: 8px;
-  }
+  .api-hint { font-size: 11.5px; color: var(--text3); margin-top: 7px; }
   .api-hint a { color: var(--accent); text-decoration: none; }
 
-  /* SUBJECT PILLS */
-  .subjects {
-    display: flex; flex-wrap: wrap; gap: 8px;
-    margin-bottom: 20px;
-    animation: fadeUp 0.5s ease 0.15s both;
+  /* ── SUBJECT PILLS ── */
+  .subject-wrap {
+    display: flex; flex-wrap: wrap; gap: 7px;
+    padding: 16px 0 0;
+    animation: fadeUp 0.4s ease 0.05s both;
   }
-  .subject-pill {
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 13px;
-    font-weight: 500;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    color: var(--text2);
-    cursor: pointer;
+  .pill {
+    padding: 5px 13px; border-radius: 20px;
+    font-size: 12.5px; font-weight: 600;
+    border: 1.5px solid var(--border);
+    background: var(--surface); color: var(--text2);
+    cursor: pointer; transition: all 0.18s;
+    user-select: none;
+  }
+  .pill:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+  .pill.active { background: var(--accent); color: #fff; border-color: var(--accent); box-shadow: 0 2px 8px rgba(108,99,255,0.3); }
+
+  /* ── MODE TOGGLE ── */
+  .mode-wrap {
+    display: flex; align-items: center; gap: 10px;
+    padding: 14px 0 0;
+    animation: fadeUp 0.4s ease 0.08s both;
+  }
+  .mode-label { font-size: 12px; font-weight: 600; color: var(--text2); }
+  .mode-toggle {
+    display: flex; background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 20px; padding: 3px; gap: 3px;
+  }
+  .mode-btn {
+    padding: 4px 14px; border-radius: 16px; border: none;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 12px; font-weight: 700; cursor: pointer;
     transition: all 0.2s;
   }
-  .subject-pill:hover { border-color: var(--accent); color: var(--accent); }
-  .subject-pill.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .mode-btn.on { background: var(--accent); color: #fff; }
+  .mode-btn.off { background: transparent; color: var(--text2); }
 
-  /* QUESTION BOX */
-  .question-card {
+  /* ── CHAT AREA ── */
+  .chat-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px 0;
+    animation: fadeUp 0.4s ease 0.1s both;
+  }
+
+  /* Bot welcome bubble */
+  .bot-bubble {
+    display: flex; align-items: flex-start; gap: 10px;
+  }
+  .bot-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 17px; flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(108,99,255,0.25);
+  }
+  .bot-msg {
     background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-    box-shadow: var(--shadow);
-    margin-bottom: 24px;
-    animation: fadeUp 0.5s ease 0.2s both;
-  }
-  .question-card textarea {
-    width: 100%;
-    min-height: 130px;
-    padding: 20px;
-    border: none;
-    background: transparent;
+    border: 1.5px solid var(--border);
+    border-radius: 4px 18px 18px 18px;
+    padding: 13px 16px;
+    font-size: 14px; line-height: 1.7;
     color: var(--text);
-    font-family: 'Sora', sans-serif;
-    font-size: 15px;
-    line-height: 1.7;
-    resize: none;
-    outline: none;
+    max-width: calc(100% - 50px);
+    box-shadow: var(--shadow);
   }
-  .question-card textarea::placeholder { color: var(--text3); }
-  .card-footer {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 12px 20px;
-    border-top: 1px solid var(--border);
-    background: var(--surface2);
+  .bot-msg strong { color: var(--accent); }
+
+  /* User bubble */
+  .user-bubble {
+    display: flex; justify-content: flex-end;
   }
-  .char-count { font-size: 12px; color: var(--text3); font-family: 'JetBrains Mono', monospace; }
-  .ask-btn {
-    display: flex; align-items: center; gap: 8px;
-    padding: 10px 24px;
-    background: var(--accent);
+  .user-msg {
+    background: linear-gradient(135deg, var(--accent), #8b5cf6);
     color: #fff;
-    border: none;
-    border-radius: var(--radius-sm);
-    font-family: 'Sora', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
+    border-radius: 18px 4px 18px 18px;
+    padding: 13px 17px;
+    font-size: 14px; line-height: 1.6;
+    max-width: 85%;
+    box-shadow: 0 4px 14px rgba(108,99,255,0.3);
+    word-break: break-word;
   }
-  .ask-btn:hover { opacity: 0.88; transform: translateY(-1px); }
-  .ask-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-  .ask-btn svg { width: 16px; height: 16px; }
 
-  /* ANSWER */
-  .answer-card {
+  /* Answer bubble */
+  .answer-bubble {
+    display: flex; align-items: flex-start; gap: 10px;
+  }
+  .answer-msg {
     background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
+    border: 1.5px solid var(--border);
+    border-radius: 4px 18px 18px 18px;
     overflow: hidden;
-    animation: fadeUp 0.4s ease;
+    max-width: calc(100% - 50px);
+    box-shadow: var(--shadow);
+    animation: fadeUp 0.35s ease;
   }
-  .answer-header {
+  .answer-top {
     display: flex; align-items: center; justify-content: space-between;
-    padding: 14px 20px;
-    border-bottom: 1px solid var(--border);
-    background: var(--surface2);
-  }
-  .answer-label {
-    display: flex; align-items: center; gap: 8px;
-    font-size: 13px; font-weight: 600;
-    color: var(--accent);
-  }
-  .answer-dot {
-    width: 8px; height: 8px; border-radius: 50%;
-    background: var(--accent);
-    animation: pulse 1.5s infinite;
-  }
-  .copy-btn {
-    padding: 5px 12px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    background: transparent;
-    color: var(--text2);
-    font-family: 'Sora', sans-serif;
-    font-size: 12px;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .copy-btn:hover { border-color: var(--accent); color: var(--accent); }
-  .answer-body {
-    padding: 20px;
-    font-size: 15px;
-    line-height: 1.8;
-    color: var(--text);
-    white-space: pre-wrap;
-    word-wrap: break-word;
-  }
-  .answer-body.loading {
-    color: var(--text3);
-    font-style: italic;
-    display: flex; align-items: center; gap: 10px;
-  }
-
-  /* HISTORY */
-  .history-section { margin-top: 40px; animation: fadeUp 0.5s ease 0.3s both; }
-  .history-title {
-    font-size: 13px; font-weight: 600;
-    color: var(--text3);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: 14px;
-  }
-  .history-item {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 14px 16px;
-    margin-bottom: 10px;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .history-item:hover { border-color: var(--accent); transform: translateX(3px); }
-  .history-q {
-    font-size: 13px; font-weight: 500;
-    color: var(--text);
-    margin-bottom: 4px;
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  }
-  .history-meta {
-    font-size: 11px; color: var(--text3);
-    font-family: 'JetBrains Mono', monospace;
-    display: flex; align-items: center; gap: 10px;
-  }
-  .history-subj {
+    padding: 10px 15px;
     background: var(--accent-light);
-    color: var(--accent);
-    padding: 1px 7px;
-    border-radius: 10px;
-    font-size: 10px;
-    font-weight: 600;
+    border-bottom: 1px solid var(--accent-border);
+  }
+  .answer-tag {
+    font-size: 11px; font-weight: 700;
+    color: var(--accent); display: flex; align-items: center; gap: 6px;
+    letter-spacing: 0.03em;
+  }
+  .dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--accent);
+  }
+  .dot.pulse { animation: pulse 1.4s infinite; }
+  .copy-btn {
+    padding: 3px 10px; border: 1.5px solid var(--accent-border);
+    border-radius: 8px; background: transparent; color: var(--accent);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 11px; font-weight: 700; cursor: pointer; transition: all 0.2s;
+  }
+  .copy-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .answer-text {
+    padding: 15px 17px;
+    font-size: 14.5px; line-height: 1.85;
+    color: var(--text); white-space: pre-wrap; word-wrap: break-word;
+  }
+  .answer-text.loading {
+    color: var(--text3); font-style: italic;
+    display: flex; align-items: center; gap: 10px;
   }
 
-  /* SPINNER */
+  /* ── ERROR ── */
+  .error-box {
+    background: #fef2f2; border: 1.5px solid #fecaca;
+    color: var(--red); padding: 12px 16px;
+    border-radius: var(--radius-xs);
+    font-size: 13px; animation: fadeUp 0.3s ease;
+  }
+  [data-theme="dark"] .error-box { background: #2a1515; border-color: #5a2020; }
+
+  /* ── INPUT BAR ── */
+  .input-wrap {
+    position: sticky; bottom: 0;
+    background: linear-gradient(to top, var(--bg) 80%, transparent);
+    padding: 12px 0 20px;
+    max-width: var(--chat-max);
+    width: 100%;
+    margin: 0 auto;
+  }
+  /* This element is outside .app so needs its own padding */
+  .input-outer {
+    position: sticky; bottom: 0;
+    background: linear-gradient(to top, var(--bg) 75%, transparent);
+    padding: 10px 16px 20px;
+  }
+  .input-inner {
+    max-width: var(--chat-max);
+    margin: 0 auto;
+  }
+  .input-card {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 20px;
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .input-card:focus-within { border-color: var(--accent); }
+  .input-card textarea {
+    width: 100%; min-height: 56px; max-height: 160px;
+    padding: 16px 18px 6px;
+    border: none; background: transparent;
+    color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 14.5px; line-height: 1.6;
+    resize: none; outline: none;
+  }
+  .input-card textarea::placeholder { color: var(--text3); }
+  .input-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 6px 12px 10px;
+  }
+  .char-count { font-size: 11px; color: var(--text3); font-family: 'JetBrains Mono', monospace; }
+  .send-btn {
+    display: flex; align-items: center; gap: 7px;
+    padding: 8px 20px;
+    background: linear-gradient(135deg, var(--accent), #8b5cf6);
+    color: #fff; border: none;
+    border-radius: 14px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13.5px; font-weight: 700; cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 2px 10px rgba(108,99,255,0.35);
+  }
+  .send-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(108,99,255,0.45); }
+  .send-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+  .send-btn svg { width: 15px; height: 15px; }
+
+  /* ── SPINNER ── */
   .spinner {
-    width: 18px; height: 18px;
+    width: 16px; height: 16px;
     border: 2px solid var(--border);
     border-top-color: var(--accent);
     border-radius: 50%;
@@ -352,156 +361,141 @@
     flex-shrink: 0;
   }
 
-  /* ERROR */
-  .error-msg {
-    background: #fef2f2;
-    border: 1px solid #fecaca;
-    color: var(--red);
-    padding: 14px 18px;
-    border-radius: var(--radius-sm);
-    font-size: 14px;
-    margin-top: 16px;
-    animation: fadeUp 0.3s ease;
-  }
-  [data-theme="dark"] .error-msg { background: #2a1515; border-color: #5a2020; }
-
+  /* ── ANIMATIONS ── */
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
+    from { opacity: 0; transform: translateY(12px); }
     to { opacity: 1; transform: translateY(0); }
   }
   @keyframes spin { to { transform: rotate(360deg); } }
-  @keyframes pulse {
-    0%, 100% { opacity: 1; } 50% { opacity: 0.3; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.25} }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 500px) {
+    .api-row { flex-direction: column; }
+    .user-msg { max-width: 92%; }
   }
 
-  /* RESPONSIVE */
-  @media (max-width: 500px) {
-    .api-input-row { flex-direction: column; }
-    .card-footer { flex-direction: column; gap: 10px; align-items: stretch; }
-    .ask-btn { justify-content: center; }
+  /* Typing dots */
+  .typing-dots span {
+    display: inline-block; width: 6px; height: 6px;
+    border-radius: 50%; background: var(--accent);
+    margin: 0 2px;
+    animation: bounce 1.2s infinite;
+  }
+  .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes bounce {
+    0%,80%,100%{transform:translateY(0)} 40%{transform:translateY(-6px)}
   }
 </style>
 </head>
 <body>
 
+<!-- NAV -->
 <nav>
   <a class="nav-logo" href="#">
-    <div class="nav-logo-icon">
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="10" cy="10" r="4" fill="#fff"/>
-        <path d="M10 2 A8 8 0 0 1 18 10" stroke="#4285F4" stroke-width="3" stroke-linecap="round"/>
-        <path d="M18 10 A8 8 0 0 1 10 18" stroke="#EA4335" stroke-width="3" stroke-linecap="round"/>
-        <path d="M10 18 A8 8 0 0 1 2 10" stroke="#FBBC05" stroke-width="3" stroke-linecap="round"/>
-        <path d="M2 10 A8 8 0 0 1 10 2" stroke="#34A853" stroke-width="3" stroke-linecap="round"/>
-        <text x="10" y="13.5" text-anchor="middle" font-family="Sora,sans-serif" font-size="7" font-weight="700" fill="#1a1a18">J</text>
-      </svg>
-    </div>
+    <div class="logo-icon">🎯</div>
     <span>DoubtClear</span>
   </a>
   <div class="nav-right">
     <span class="api-badge disconnected" id="apiBadge" onclick="toggleApiSetup()">⚙ Setup API</span>
-    <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙 Dark</button>
+    <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">🌙 Dark</button>
   </div>
 </nav>
 
-<main>
-  <div class="hero">
-    <h1>Ask any doubt,<br/><span>get instant answers</span></h1>
-    <p>AI-powered doubt solver for JEE Mains & Advanced — Physics, Chemistry & Maths. Free forever.</p>
-  </div>
+<!-- MAIN APP -->
+<div class="app">
 
   <!-- API Setup -->
   <div class="api-setup" id="apiSetup">
-    <h3>🔑 Enter your OpenRouter API Key</h3>
-    <div class="api-input-row">
+    <h3>🔑 OpenRouter API Key daalo</h3>
+    <div class="api-row">
       <input type="password" id="apiKeyInput" placeholder="sk-or-v1-..." />
-      <button class="save-btn" onclick="saveApiKey()">Save Key</button>
+      <button class="save-btn" onclick="saveApiKey()">Save ✓</button>
     </div>
-    <p class="api-hint">
-      Free key from <a href="https://openrouter.ai/keys" target="_blank">openrouter.ai/keys</a> → "Create Key" — Free models available!
-    </p>
+    <p class="api-hint">Free key: <a href="https://openrouter.ai/keys" target="_blank">openrouter.ai/keys</a> → Create Key (free models available!)</p>
   </div>
 
   <!-- Subject Pills -->
-  <div class="subjects" id="subjectPills">
-    <span class="subject-pill active" onclick="selectSubject(this, 'JEE General')">All JEE</span>
-    <span class="subject-pill" onclick="selectSubject(this, 'JEE Physics')">Physics</span>
-    <span class="subject-pill" onclick="selectSubject(this, 'JEE Chemistry')">Chemistry</span>
-    <span class="subject-pill" onclick="selectSubject(this, 'JEE Maths')">Maths</span>
-    <span class="subject-pill" onclick="selectSubject(this, 'JEE Organic Chemistry')">Organic Chem</span>
-    <span class="subject-pill" onclick="selectSubject(this, 'JEE Inorganic Chemistry')">Inorganic Chem</span>
-    <span class="subject-pill" onclick="selectSubject(this, 'JEE Calculus')">Calculus</span>
-    <span class="subject-pill" onclick="selectSubject(this, 'JEE Mechanics')">Mechanics</span>
+  <div class="subject-wrap" id="subjectPills">
+    <span class="pill active" onclick="selectSubject(this, 'JEE General')">⭐ All JEE</span>
+    <span class="pill" onclick="selectSubject(this, 'JEE Physics')">⚡ Physics</span>
+    <span class="pill" onclick="selectSubject(this, 'JEE Chemistry')">🧪 Chemistry</span>
+    <span class="pill" onclick="selectSubject(this, 'JEE Maths')">📐 Maths</span>
+    <span class="pill" onclick="selectSubject(this, 'JEE Organic Chemistry')">🔬 Organic</span>
+    <span class="pill" onclick="selectSubject(this, 'JEE Calculus')">∫ Calculus</span>
+    <span class="pill" onclick="selectSubject(this, 'JEE Mechanics')">🔧 Mechanics</span>
   </div>
 
-  <!-- Answer Mode Toggle -->
-  <div style="display:flex; align-items:center; gap:10px; margin-bottom:16px; animation: fadeUp 0.5s ease 0.18s both;">
-    <span style="font-size:13px; color:var(--text2); font-weight:500;">Answer Mode:</span>
-    <div style="display:flex; background:var(--surface); border:1px solid var(--border); border-radius:20px; padding:3px; gap:3px;">
-      <button id="modeShort" onclick="setMode('short')" style="padding:5px 16px; border-radius:16px; border:none; font-family:'Sora',sans-serif; font-size:12px; font-weight:600; cursor:pointer; background:var(--accent); color:#fff; transition:all 0.2s;">⚡ Short</button>
-      <button id="modeDetailed" onclick="setMode('detailed')" style="padding:5px 16px; border-radius:16px; border:none; font-family:'Sora',sans-serif; font-size:12px; font-weight:600; cursor:pointer; background:transparent; color:var(--text2); transition:all 0.2s;">📖 Detailed</button>
+  <!-- Mode Toggle -->
+  <div class="mode-wrap">
+    <span class="mode-label">Mode:</span>
+    <div class="mode-toggle">
+      <button id="modeShort" class="mode-btn on" onclick="setMode('short')">⚡ Short</button>
+      <button id="modeDetailed" class="mode-btn off" onclick="setMode('detailed')">📖 Detailed</button>
     </div>
   </div>
 
-  <!-- Question Box -->
-  <div class="question-card">
-    <textarea id="questionInput" placeholder="JEE doubt type karo... e.g. Projectile motion mein maximum range kab hoti hai? (Enter = Send, Shift+Enter = New line)" maxlength="2000" oninput="updateChar()"></textarea>
-    <div class="card-footer">
-      <span class="char-count" id="charCount">0 / 2000</span>
-      <button class="ask-btn" id="askBtn" onclick="askDoubt()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg>
-        Ask AI
-      </button>
-    </div>
-  </div>
-
-  <!-- Error -->
-  <div class="error-msg" id="errorMsg" style="display:none;"></div>
-
-  <!-- Answer -->
-  <div id="answerSection" style="display:none;">
-    <div class="answer-card">
-      <div class="answer-header">
-        <div class="answer-label">
-          <div class="answer-dot" id="answerDot"></div>
-          AI Answer
-        </div>
-        <button class="copy-btn" onclick="copyAnswer()">Copy</button>
+  <!-- Chat Area -->
+  <div class="chat-area" id="chatArea">
+    <!-- Welcome message -->
+    <div class="bot-bubble">
+      <div class="bot-avatar">🤖</div>
+      <div class="bot-msg">
+        <strong>Hey! Main hoon DoubtClear 👋</strong><br/>
+        Tera JEE ka AI study buddy! Koi bhi doubt pucho yaar — Physics, Chemistry, Maths — sab clear karunga. Aur haan, normal "hello" bhi chal jaata hai 😄
       </div>
-      <div class="answer-body" id="answerBody"></div>
     </div>
+    <!-- Dynamic messages go here -->
   </div>
 
-  <!-- History -->
-  <div class="history-section" id="historySection" style="display:none;">
-    <div class="history-title">Recent Questions</div>
-    <div id="historyList"></div>
+</div><!-- end .app -->
+
+<!-- ERROR -->
+<div style="max-width:var(--chat-max);margin:0 auto;padding:0 16px;">
+  <div class="error-box" id="errorMsg" style="display:none;margin-bottom:8px;"></div>
+</div>
+
+<!-- INPUT BAR -->
+<div class="input-outer">
+  <div class="input-inner">
+    <div class="input-card">
+      <textarea id="questionInput"
+        placeholder="Kuch bhi pucho yaar... doubt ho ya bas hi bolna ho 😄"
+        maxlength="2000"
+        oninput="updateChar()"
+        rows="1"></textarea>
+      <div class="input-footer">
+        <span class="char-count" id="charCount">0 / 2000</span>
+        <button class="send-btn" id="askBtn" onclick="askDoubt()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/>
+          </svg>
+          Pucho!
+        </button>
+      </div>
+    </div>
   </div>
-</main>
+</div>
 
 <script>
   let apiKey = localStorage.getItem('dc_api_key') || '';
   let selectedSubject = 'JEE General';
-  let history = JSON.parse(localStorage.getItem('dc_history') || '[]');
   let currentAnswer = '';
   let answerMode = 'short';
 
   function setMode(mode) {
     answerMode = mode;
-    document.getElementById('modeShort').style.background = mode === 'short' ? 'var(--accent)' : 'transparent';
-    document.getElementById('modeShort').style.color = mode === 'short' ? '#fff' : 'var(--text2)';
-    document.getElementById('modeDetailed').style.background = mode === 'detailed' ? 'var(--accent)' : 'transparent';
-    document.getElementById('modeDetailed').style.color = mode === 'detailed' ? '#fff' : 'var(--text2)';
+    document.getElementById('modeShort').className = 'mode-btn ' + (mode === 'short' ? 'on' : 'off');
+    document.getElementById('modeDetailed').className = 'mode-btn ' + (mode === 'detailed' ? 'on' : 'off');
   }
 
-  // Init
   window.onload = () => {
     if (apiKey) {
       document.getElementById('apiKeyInput').value = apiKey;
       setApiConnected(true);
       document.getElementById('apiSetup').style.display = 'none';
     }
-    renderHistory();
     const savedTheme = localStorage.getItem('dc_theme') || 'light';
     document.documentElement.setAttribute('data-theme', savedTheme);
     updateThemeBtn(savedTheme);
@@ -514,7 +508,7 @@
 
   function saveApiKey() {
     const val = document.getElementById('apiKeyInput').value.trim();
-    if (!val) { showError('Please enter a valid API key!'); return; }
+    if (!val) { showError('Bhai API key toh daalo pehle! 😅'); return; }
     apiKey = val;
     localStorage.setItem('dc_api_key', apiKey);
     setApiConnected(true);
@@ -526,7 +520,7 @@
     const badge = document.getElementById('apiBadge');
     if (connected) {
       badge.className = 'api-badge connected';
-      badge.textContent = '✓ API Connected';
+      badge.textContent = '✓ Connected';
     } else {
       badge.className = 'api-badge disconnected';
       badge.textContent = '⚙ Setup API';
@@ -534,7 +528,7 @@
   }
 
   function selectSubject(el, subject) {
-    document.querySelectorAll('.subject-pill').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
     el.classList.add('active');
     selectedSubject = subject;
   }
@@ -542,25 +536,117 @@
   function updateChar() {
     const len = document.getElementById('questionInput').value.length;
     document.getElementById('charCount').textContent = len + ' / 2000';
+    // Auto resize
+    const ta = document.getElementById('questionInput');
+    ta.style.height = 'auto';
+    ta.style.height = Math.min(ta.scrollHeight, 160) + 'px';
+  }
+
+  function appendUserMsg(text) {
+    const chat = document.getElementById('chatArea');
+    const div = document.createElement('div');
+    div.className = 'user-bubble';
+    div.innerHTML = `<div class="user-msg">${escHtml(text)}</div>`;
+    chat.appendChild(div);
+    return div;
+  }
+
+  function appendBotTyping() {
+    const chat = document.getElementById('chatArea');
+    const wrap = document.createElement('div');
+    wrap.className = 'answer-bubble';
+    wrap.id = 'typingBubble';
+    wrap.innerHTML = `
+      <div class="bot-avatar">🤖</div>
+      <div class="bot-msg" style="padding: 14px 18px;">
+        <div class="typing-dots"><span></span><span></span><span></span></div>
+      </div>`;
+    chat.appendChild(wrap);
+    scrollBottom();
+    return wrap;
+  }
+
+  function replaceWithAnswer(text) {
+    const typing = document.getElementById('typingBubble');
+    if (typing) typing.remove();
+
+    const chat = document.getElementById('chatArea');
+    currentAnswer = text;
+    const wrap = document.createElement('div');
+    wrap.className = 'answer-bubble';
+    wrap.innerHTML = `
+      <div class="bot-avatar">🤖</div>
+      <div class="answer-msg">
+        <div class="answer-top">
+          <div class="answer-tag">
+            <div class="dot"></div>
+            DoubtClear ka Jawab
+          </div>
+          <button class="copy-btn" onclick="copyAnswer()">Copy 📋</button>
+        </div>
+        <div class="answer-text">${escHtml(text)}</div>
+      </div>`;
+    chat.appendChild(wrap);
+    scrollBottom();
+  }
+
+  function scrollBottom() {
+    setTimeout(() => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }), 50);
   }
 
   async function askDoubt() {
     const question = document.getElementById('questionInput').value.trim();
-    if (!question) { showError('Please type your question first!'); return; }
-    if (!apiKey) { showError('Please save your OpenRouter API key first!'); document.getElementById('apiSetup').style.display = 'block'; return; }
+    if (!question) { showError('Kuch toh likho yaar! 😄'); return; }
+    if (!apiKey) {
+      showError('Pehle API key save karo bhai! 🔑');
+      document.getElementById('apiSetup').style.display = 'block';
+      return;
+    }
 
     hideError();
-    setLoading(true);
+
+    // Show user message
+    appendUserMsg(question);
+    document.getElementById('questionInput').value = '';
+    document.getElementById('questionInput').style.height = 'auto';
+    updateChar();
+
+    // Show typing indicator
+    const typingEl = appendBotTyping();
+
+    // Disable send button
+    const btn = document.getElementById('askBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<div class="spinner"></div>';
 
     const modeInstruction = answerMode === 'short'
-      ? 'Give a SHORT and CONCISE answer in maximum 5-6 lines. Only key points. No extra explanation.'
+      ? 'Give a SHORT and CONCISE answer in maximum 5-6 lines. Only key points.'
       : 'Give a DETAILED step-by-step answer. Explain fully with examples and tips.';
 
-    const prompt = `You are a helpful and friendly teacher. Answer the student's question clearly.
-Topic: ${selectedSubject}
-Question: ${question}
+    const isGreeting = /^(hi|hello|hey|hlo|helo|hii+|namaste|namaskar|nmskt|kya haal|kya hal|kaise ho|kaisa hai|sup|whats up|good morning|good evening|good afternoon|gm|hy)\b/i.test(question);
+    const isCasual = /^(kya|aur|bhai|yaar|yr|yar|theek|thik|okay|ok|hmm|haan|nahi|nope|acha+|shukriya|thanks|thank you|ty|bye|alvida|tc|take care)\b/i.test(question);
 
-${modeInstruction}`;
+    let systemPrompt;
+    if (isGreeting) {
+      systemPrompt = `You are DoubtClear, a warm, fun, and friendly AI study buddy for JEE aspirants. The student just greeted you. Reply with a super friendly, casual, warm greeting in Hinglish (Hindi + English mix). Be enthusiastic! Use emojis. Ask what they want to study today. Keep it short and fun. Don't give any JEE content. Just greet them warmly!`;
+    } else if (isCasual) {
+      systemPrompt = `You are DoubtClear, a warm, friendly AI study buddy for JEE aspirants. The student is chatting casually. Reply in Hinglish (Hindi + English mix), naturally and warmly. Use emojis. Be conversational. Gently ask if they have any doubts or need help studying.`;
+    } else {
+      systemPrompt = `You are DoubtClear — a warm, encouraging, and super helpful study buddy for JEE aspirants. Explain like a cool senior dost who genuinely wants the student to succeed.
+
+Topic: ${selectedSubject}
+
+${modeInstruction}
+
+STYLE RULES:
+- Start with something encouraging: "Bilkul! 😊", "Haan yaar!", "Great question!", "Arey easy hai ye!"
+- Use Hinglish naturally (mix Hindi + English where it feels natural)
+- Be warm, friendly — NOT robotic or textbook-like
+- Use emojis occasionally 🎯
+- End with a short motivating line like "You've got this! 💪" or "Practice karo, pakka clear ho jaayega!"`;
+    }
+
+    const prompt = systemPrompt + `\n\nStudent's message: ${question}`;
 
     try {
       const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
@@ -569,68 +655,34 @@ ${modeInstruction}`;
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${apiKey}`,
           'HTTP-Referer': 'https://doubt-solver.github.io',
-          'X-Title': 'JEE Doubt Solver'
+          'X-Title': 'DoubtClear JEE'
         },
         body: JSON.stringify({
           model: 'openrouter/auto',
-          messages: [{ role: 'user', content: prompt }]
+          messages: [{ role: 'user', content: prompt }],
+          temperature: 0.85
         })
       });
 
       const data = await res.json();
-
-      if (data.error) {
-        showError('API Error: ' + data.error.message);
-        setLoading(false);
-        return;
-      }
-
-      currentAnswer = data.choices[0].message.content;
-      showAnswer(currentAnswer);
-
-      // Save to history
-      const item = { q: question, a: currentAnswer, subject: selectedSubject, time: new Date().toLocaleTimeString() };
-      history.unshift(item);
-      if (history.length > 10) history.pop();
-      localStorage.setItem('dc_history', JSON.stringify(history));
-      renderHistory();
+      if (data.error) { throw new Error(data.error.message); }
+      replaceWithAnswer(data.choices[0].message.content);
 
     } catch(e) {
-      showError('Something went wrong. Check your API key and internet connection.');
+      if (document.getElementById('typingBubble')) document.getElementById('typingBubble').remove();
+      showError('Kuch gadbad ho gayi 😅 — API key check karo aur internet dekho.');
     }
 
-    setLoading(false);
-  }
-
-  function setLoading(loading) {
-    const btn = document.getElementById('askBtn');
-    const dot = document.getElementById('answerDot');
-    if (loading) {
-      btn.disabled = true;
-      btn.innerHTML = '<div class="spinner"></div> Thinking...';
-      document.getElementById('answerSection').style.display = 'block';
-      document.getElementById('answerBody').className = 'answer-body loading';
-      document.getElementById('answerBody').innerHTML = '<div class="spinner"></div> AI is thinking...';
-      dot.style.animation = 'pulse 0.5s infinite';
-    } else {
-      btn.disabled = false;
-      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg> Ask AI';
-      dot.style.animation = 'none';
-      dot.style.opacity = '1';
-    }
-  }
-
-  function showAnswer(text) {
-    document.getElementById('answerSection').style.display = 'block';
-    document.getElementById('answerBody').className = 'answer-body';
-    document.getElementById('answerBody').textContent = text;
+    btn.disabled = false;
+    btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg> Pucho!`;
   }
 
   function copyAnswer() {
     navigator.clipboard.writeText(currentAnswer).then(() => {
-      const btn = document.querySelector('.copy-btn');
-      btn.textContent = 'Copied!';
-      setTimeout(() => btn.textContent = 'Copy', 2000);
+      const btns = document.querySelectorAll('.copy-btn');
+      const last = btns[btns.length - 1];
+      last.textContent = 'Copied! ✓';
+      setTimeout(() => last.textContent = 'Copy 📋', 2000);
     });
   }
 
@@ -641,55 +693,23 @@ ${modeInstruction}`;
   }
   function hideError() { document.getElementById('errorMsg').style.display = 'none'; }
 
-  function renderHistory() {
-    if (history.length === 0) { document.getElementById('historySection').style.display = 'none'; return; }
-    document.getElementById('historySection').style.display = 'block';
-    document.getElementById('historyList').innerHTML = history.map((item, i) => `
-      <div class="history-item" onclick="loadHistory(${i})">
-        <div class="history-q">${escHtml(item.q)}</div>
-        <div class="history-meta">
-          <span class="history-subj">${escHtml(item.subject)}</span>
-          <span>${item.time}</span>
-        </div>
-      </div>
-    `).join('');
-  }
-
-  function loadHistory(i) {
-    const item = history[i];
-    document.getElementById('questionInput').value = item.q;
-    updateChar();
-    showAnswer(item.a);
-    currentAnswer = item.a;
-    document.querySelectorAll('.subject-pill').forEach(p => {
-      p.classList.toggle('active', p.textContent.trim() === item.subject || (item.subject === 'General' && p.textContent === 'All Subjects'));
-    });
-    selectedSubject = item.subject;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
   function escHtml(str) {
     return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 
   function toggleTheme() {
-    const current = document.documentElement.getAttribute('data-theme');
-    const next = current === 'light' ? 'dark' : 'light';
+    const cur = document.documentElement.getAttribute('data-theme');
+    const next = cur === 'light' ? 'dark' : 'light';
     document.documentElement.setAttribute('data-theme', next);
     localStorage.setItem('dc_theme', next);
     updateThemeBtn(next);
   }
-
-  function updateThemeBtn(theme) {
-    document.getElementById('themeBtn').textContent = theme === 'light' ? '🌙 Dark' : '☀️ Light';
+  function updateThemeBtn(t) {
+    document.getElementById('themeBtn').textContent = t === 'light' ? '🌙 Dark' : '☀️ Light';
   }
 
-  // Enter = send, Shift+Enter = new line
   document.getElementById('questionInput').addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      askDoubt();
-    }
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); askDoubt(); }
   });
 </script>
 </body>
